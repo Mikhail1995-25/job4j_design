@@ -20,7 +20,7 @@ public class ArrayIt implements Iterator<Integer> {
     @Override
     public Integer next() {
         if (!hasNext()) {
-                throw new NoSuchElementException();
+            throw new NoSuchElementException();
         }
         return data[point++];
     }
