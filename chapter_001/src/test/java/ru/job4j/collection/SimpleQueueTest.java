@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
+
 public class SimpleQueueTest {
 
     @Test
@@ -39,4 +41,15 @@ public class SimpleQueueTest {
         queue.poll();
     }
 
+    @Test
+    public void whenPushPushPollPushPoll() {
+        SimpleQueue<Integer> queue = new SimpleQueue<>();
+        queue.push(1);
+        queue.poll();
+        queue.push(2);
+        queue.poll();
+        queue.push(3);
+        int rs1 = queue.poll();
+        assertThat(rs1, is(3));
+    }
 }
