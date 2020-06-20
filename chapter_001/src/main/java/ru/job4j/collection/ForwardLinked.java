@@ -5,49 +5,51 @@ import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
+    private Node<T> last;
 
-    public void add(T value) {
-        Node<T> node = new Node<>(value, null);
-        if (head == null) {
-            head = node;
-            return;
-        }
-        Node<T> tail = head;
-        while (tail.next != null) {
-            tail = tail.next;
-        }
-        tail.next = node;
-    }
-
-    public T deleteFirst() {
-        T result;
-       if (head != null) {
-           Node<T> node = head;
-           result = node.value;
-           head = node.next;
-           node.next = null;
+   public void addFirst(T value) {
+       Node<T> first = new Node<>();
+       first.value = value;
+       if (head == null) {
+           head = first;
+           last = first;
        } else {
-           throw new NoSuchElementException();
+           first.next = head;
+           head = first;
        }
-       return result;
-    }
+   }
 
-    public T deleteLast() {
-        if (head == null) {
-            throw new NoSuchElementException();
-        }
-        T result;
-        if (head.next == null) {
-            result = head.value;
-            head = null;
-        } else {
-            Node<T> n = head;
-            result = n.next.value;
-            n.next = null;
-        }
-       return result;
-    }
+   public void addLast(T value) {
+       Node<T> tail = new Node<>();
+       tail.value = value;
+       if (last == null) {
+           head = tail;
+           last = tail;
+       } else {
+           last.next = tail;
+           last = tail;
+       }
+   }
 
+
+   void delete() {
+       if (head == null) {
+           throw new NoSuchElementException();
+       } else if (head == last) {
+          head = null;
+          last = null;
+          return;
+       }
+       Node<T> node = head;
+       while (node.next != null) {
+           if (last == node.next) {
+               last = node;
+           }
+           node.next = node.next.next;
+           return;
+       }
+       node = node.next;
+   }
 
     @Override
     public Iterator<T> iterator() {
@@ -56,7 +58,7 @@ public class ForwardLinked<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return node != null;
+                return node != null || last != null;
             }
 
             @Override
@@ -75,9 +77,10 @@ public class ForwardLinked<T> implements Iterable<T> {
         T value;
         Node<T> next;
 
-        public Node(T value, Node<T> next) {
-            this.value = value;
-            this.next = next;
-        }
+
+
+
+
+
     }
 }

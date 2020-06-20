@@ -24,8 +24,17 @@ public class SimpleStackTest {
     public void whenPushPushThenPollPoll() {
         SimpleStack<Integer> stack = new SimpleStack<>();
         stack.push(1);
-        stack.push(2);
+        stack.pushLast(2);
         stack.pop();
         assertThat(stack.pop(), is(1));
+    }
+
+    @Test
+    public void whenPushPollThenPushPollLast() {
+        SimpleStack<Integer> stack = new SimpleStack<>();
+        stack.push(1);
+        stack.pop();
+        stack.push(2);
+        assertThat(stack.pop(), is(2));
     }
 }

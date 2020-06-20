@@ -4,10 +4,23 @@ public class SimpleStack<T> {
     private ForwardLinked<T> linked = new ForwardLinked<>();
 
     public T pop() {
-        return linked.deleteLast();
+        T first = linked.iterator().next();
+        linked.delete();
+        return first;
     }
 
     public void push(T value) {
-        linked.add(value);
+        linked.addFirst(value);
     }
+
+    public T popLast() {
+        T last = linked.iterator().next();
+        linked.delete();
+        return last;
+    }
+
+    public void pushLast(T value) {
+        linked.addLast(value);
+    }
+
 }
