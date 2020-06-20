@@ -26,7 +26,7 @@ public class SimpleStackTest {
         stack.push(1);
         stack.pushLast(2);
         stack.pop();
-        assertThat(stack.pop(), is(1));
+        assertThat(stack.popLast(), is(1));
     }
 
     @Test

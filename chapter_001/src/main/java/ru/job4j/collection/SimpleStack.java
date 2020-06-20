@@ -5,7 +5,7 @@ public class SimpleStack<T> {
 
     public T pop() {
         T first = linked.iterator().next();
-        linked.delete();
+        linked.deleteFirst();
         return first;
     }
 
@@ -13,14 +13,13 @@ public class SimpleStack<T> {
         linked.addFirst(value);
     }
 
-    public T popLast() {
-        T last = linked.iterator().next();
-        linked.delete();
-        return last;
-    }
-
     public void pushLast(T value) {
         linked.addLast(value);
     }
 
+    public T popLast() {
+        T last = linked.iterator().next();
+        linked.deleteLast();
+        return last;
+    }
 }

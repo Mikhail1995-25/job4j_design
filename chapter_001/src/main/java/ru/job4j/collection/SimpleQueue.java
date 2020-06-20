@@ -1,21 +1,16 @@
 package ru.job4j.collection;
 
+import java.util.NoSuchElementException;
+
 public class SimpleQueue<T> {
-   private final SimpleStack<T> in = new SimpleStack<>();
-   private final SimpleStack<T> out = new SimpleStack<>();
-   int size = 0;
+   private final ForwardLinked<T> o = new ForwardLinked<>();
 
    public T poll() {
-      for (int i = 0; i < size; i++) {
-          T t = in.pop();
-          out.push(t);
-      }
-      size--;
-       return out.pop();
+      return o.deleteFirst();
    }
 
    public void push(T value) {
-       size++;
-       in.push(value);
+       o.addFirst(value);
+
    }
 }

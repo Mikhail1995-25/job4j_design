@@ -13,15 +13,15 @@ public class ForwardLinkedTest {
     @Test(expected = NoSuchElementException.class)
     public void whenDeleteFirst() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.addFirst(1);
-        linked.delete();
+        linked.addLast(1);
+        linked.deleteLast();
         linked.iterator().next();
     }
 
     @Test(expected = NoSuchElementException.class)
     public void whenDeleteEmptyLinked() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
-        linked.delete();
+        linked.deleteFirst();
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ForwardLinkedTest {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.addFirst(1);
         linked.addFirst(2);
-        linked.delete();
+        linked.deleteFirst();
         Iterator<Integer> it = linked.iterator();
         assertThat(it.next(), is(2));
     }
