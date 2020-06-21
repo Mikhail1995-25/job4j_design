@@ -14,8 +14,4 @@ public class SimpleStack<T> {
     public void pushLast(T value) {
         linked.addLast(value);
     }
-
-    public T popLast() {
-        return linked.deleteLast();
-    }
 }
