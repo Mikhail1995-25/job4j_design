@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 
 public class SimpleSet<E> implements Iterable<E> {
-    SimpleArray<E> container = new SimpleArray<>();
+    private SimpleArray<E> container = new SimpleArray<>();
 
     public void addSet(E value) {
         if (!contains(value)) {
@@ -18,6 +18,7 @@ public class SimpleSet<E> implements Iterable<E> {
         for (E result : container) {
             if (result.equals(element)) {
                 b = true;
+                break;
             }
         }
         return b;
