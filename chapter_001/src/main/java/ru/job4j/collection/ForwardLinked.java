@@ -10,75 +10,67 @@ public class ForwardLinked<T> implements Iterable<T> {
     private int modCount;
     private int size = 0;
 
-   public void addLast(T value) {
-       Node<T> first = new Node<>(value);
-       if (head == null) {
-           head = first;
-       } else {
-           last = head;
-           while (last.next != null) {
-               last = last.next;
-               first.prev = last;
-               last.next = first;
-           }
-           modCount++;
-           size++;
-       }
-   }
+    public void addLast(T value) {
+        Node<T> first = new Node<>(value);
+        if (size == 0) {
+            head = first;
+            last = first;
+        } else {
+            first.prev = last;
+            last.next = first;
+            last = first;
+        }
+        modCount++;
+        size++;
+    }
+
+
 
    public void addFirst(T value) {
-       Node<T> tail = new Node<>(value);
-       if (size > 0) {
-           head.prev = tail;
-       }
-       tail.next = head;
-       head = tail;
-       if (size <= 0) {
-           last = tail;
-       }
+      Node<T> tail = new Node<>(value);
+      if (size == 0) {
+          head = tail;
+          last = tail;
+      } else {
+          head.prev = tail;
+          tail.next = head;
+          head = tail;
+      }
        size++;
        modCount++;
    }
 
    public T deleteFirst() {
-       T data = null;
-       if (size != 0) {
-           data = last.value;
-           last = last.prev;
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+       T data = head.value;
+       if (size == 1) {
+           last = null;
+           head = null;
        } else {
-           throw new NoSuchElementException();
+           head = head.next;
+           head.prev = null;
        }
        size--;
-       modCount++;
        return data;
    }
 
    public T deleteLast() {
-       T data = null;
-       last = head;
-       if (last != null) {
-           while (last.next != null) {
-               last = last.next;
-           }
-           data = binds(last);
+       T data = last.value;
+       if (size == 1) {
+           last = null;
+           head = null;
+       } else {
+           last = last.prev;
+           last.next = null;
        }
+       size--;
        return data;
    }
 
-   public T binds(Node<T> node) {
-       T data = node.value;
-       Node<T> prev = node.prev;
-       Node<T> next = node.next;
-       if (prev != null) {
-           prev.next = null;
-           last = prev;
-       } else {
-           last = null;
-           head = null;
-       }
-       size--;
-       modCount++;
-       return data;
+   public int getSize() {
+       return size;
    }
 
     @Override
