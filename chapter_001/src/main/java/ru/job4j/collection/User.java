@@ -7,11 +7,6 @@ public class User {
     private int children;
     private Calendar birthday;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, children, birthday);
-    }
-
     public User(String name, int children, Calendar birthday) {
         this.name = name;
         this.children = children;
@@ -30,6 +25,11 @@ public class User {
         return birthday;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "name='" + name + '\'' + ", children=" + children + ", birthday=" + birthday + '}';
+    }
+
     public static void main(String[] args) {
         User first = new User("Vlad", 2, new GregorianCalendar(1998, 2, 20));
         User second = new User("Vlad", 2, new GregorianCalendar(1998, 2, 20));
@@ -38,21 +38,16 @@ public class User {
         map.put(first, "Vlad");
         map.put(second, "Vlad");
 
-       // System.out.println(first.hashCode());
-       // System.out.println(second.hashCode());
-
         for (User user : map.keySet()) {
-            System.out.println(map.hashCode());
-            /**
-             * После правильной генерации hashcode результат двух обьектов получился идентичный
-             * у hashcode есть формула по которой он вычисляет ключ,
-             * 31 * поле * поле, мы получаем полноценный уникальный ключ и сравниваем.
+            System.out.println(user.toString());
+            /**2. Не перекрывать equals hashCode [#297002]
+             * Так как методы equals и hashcode не переопределены, hashcode будет разный у каждого
+             * обьекта, хотя по бизнес логике они должны быть одинаковыми,
+             * 1 мы проверяем что таблица не пустая, далее
+             * вычисляем hashcode у ключа по битовым сдвигам,
+             * далее определяем позицию indexOf.
+             *
              */
         }
+        }
     }
-}
-/**
- * Происходит вывод целого уникального числа, за счет метода hashcode().
- * при запуске программы ключи обьектов сравниваются на null,
- * далее генерерируется hash. Поэтому мы получаем результат в виде целого числа.
- */
