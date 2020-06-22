@@ -1,14 +1,16 @@
 package ru.job4j.collection;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class User {
     private String name;
     private int children;
     private Calendar birthday;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
 
     public User(String name, int children, Calendar birthday) {
         this.name = name;
@@ -36,8 +38,16 @@ public class User {
         map.put(first, "Vlad");
         map.put(second, "Vlad");
 
+       // System.out.println(first.hashCode());
+       // System.out.println(second.hashCode());
+
         for (User user : map.keySet()) {
-            System.out.println(map);
+            System.out.println(map.hashCode());
+            /**
+             * После правильной генерации hashcode результат двух обьектов получился идентичный
+             * у hashcode есть формула по которой он вычисляет ключ,
+             * 31 * поле * поле, мы получаем полноценный уникальный ключ и сравниваем.
+             */
         }
     }
 }
