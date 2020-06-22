@@ -26,6 +26,23 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return children == user.children && Objects.equals(name, user.name) && Objects.equals(birthday, user.birthday);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
+
+    @Override
     public String toString() {
         return "User{" + "name='" + name + '\'' + ", children=" + children + ", birthday=" + birthday + '}';
     }
@@ -38,8 +55,17 @@ public class User {
         map.put(first, "Vlad");
         map.put(second, "Vlad");
 
-        for (User user : map.keySet()) {
-            System.out.println(user.toString());
+        /**
+         * 3. Переопределить только hashCode [#297000]
+         * для вычисления hashcode используется формула 31 * поле * поле.
+         * так как hashcode обьектов у нас будет одинаковый, но метод equals будет разный.
+         * Далее перейдем к выполнению метода endEntry() который добавит значение в карту,
+         * найдет свободную ячейку и вставит значение
+         */
+        System.out.println(first.hashCode() + " " + second.hashCode());
+
+        //for (User user : map.keySet()) {
+          // System.out.println(user.toString());
             /**2. Не перекрывать equals hashCode [#297002]
              * Так как методы equals и hashcode не переопределены, hashcode будет разный у каждого
              * обьекта, хотя по бизнес логике они должны быть одинаковыми,
@@ -50,4 +76,4 @@ public class User {
              */
         }
         }
-    }
+    //}
