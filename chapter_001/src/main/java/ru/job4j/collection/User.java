@@ -38,6 +38,11 @@ public class User {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
+
+    @Override
     public String toString() {
         return "User{" + "name='" + name + '\'' + ", children=" + children + ", birthday=" + birthday + '}';
     }
@@ -57,7 +62,7 @@ public class User {
          * Далее перейдем к выполнению метода endEntry() который добавит значение в карту,
          * найдет свободную ячейку и вставит значение
          */
-       // System.out.println(first.hashCode() + " " + second.hashCode());
+        System.out.println(first.hashCode() + " " + second.hashCode());
 
         //for (User user : map.keySet()) {
           // System.out.println(user.toString());
@@ -83,6 +88,17 @@ public class User {
          * второе условие проверяем если обьекты у классов не одинаковые то будут разные обьекты
          * далее делаем приведение типов и сравниваем поля по этапам
          * вывод true.
+         */
+
+        /**
+         * 5. Перекрывать и equals и hashCode [#296999]
+         * equals и hashcode связаны на прямую, если метод equals true то hashcode с павными значениями
+         * наоборот это утверждение не работает проверяем равность обьектов, проверяем поля,
+         * учитываются только те поля которые носят логику.
+         * при выводе получается два одинаковых обьекта, в мэпе будет толька одна запись,
+         * так как идет перезатирание.
+         * результат: -180563432 -180563432
+         *              true
          */
     }
 }
