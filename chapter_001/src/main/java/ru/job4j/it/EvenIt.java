@@ -13,6 +13,18 @@ public class EvenIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
+        return isPrimeNumber();
+    }
+
+    @Override
+    public Integer next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        return data[point++];
+    }
+
+    public  boolean isPrimeNumber() {
         boolean b = false;
         for (int i = point; i < data.length; i++) {
             if (data[i] % 2 == 0) {
@@ -22,13 +34,5 @@ public class EvenIt implements Iterator<Integer> {
             }
         }
         return b;
-    }
-
-    @Override
-    public Integer next() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        return data[point++];
     }
 }

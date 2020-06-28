@@ -17,7 +17,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void set(int index, T model) {
-          data[Objects.checkIndex(index, point)] = model;
+        data[Objects.checkIndex(index, point)] = model;
     }
 
     public void remove(int index) {

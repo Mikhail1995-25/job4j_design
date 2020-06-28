@@ -8,10 +8,10 @@ public class HashData<K, V> implements Iterable<V> {
     private int modCount;
 
     public HashData() {
-       hashTable = new Node[16];
+        hashTable = new Node[16];
     }
 
-   public boolean insert(K key, V value) {
+    public boolean insert(K key, V value) {
         if (size + 1 >= hashTable.length * 0.75f) {
             arrayDoubling();
         }
@@ -32,7 +32,7 @@ public class HashData<K, V> implements Iterable<V> {
     private boolean keyExistButValueNew(Node<K, V> newNode, Node<K, V> node) {
         if (newNode.key.hashCode() == node.key.hashCode()
                 && Objects.equals(newNode.key, node.key)
-                    && !Objects.equals(newNode.value, node.value)) {
+                && !Objects.equals(newNode.value, node.value)) {
             newNode.value = node.value;
             return true;
         }
@@ -74,7 +74,7 @@ public class HashData<K, V> implements Iterable<V> {
         return result;
     }
 
-   public boolean delete(K key) {
+    public boolean delete(K key) {
         int index = hash(key);
         if (hashTable[index] == null) {
             return false;
@@ -120,7 +120,7 @@ public class HashData<K, V> implements Iterable<V> {
             }
 
             private boolean moveToNextCell() {
-                    arrayCounter++;
+                arrayCounter++;
 
                 while (arrayCounter < hashTable.length && hashTable[arrayCounter] == null) {
                     arrayCounter++;

@@ -22,38 +22,36 @@ public class ItemsArray<E> implements Iterable<E> {
     }
 
     public void add(E value) {
-       if (val == 0) {
-           Node<E> node = new Node<>(value);
-           first = node;
-           last = node;
-           val++;
-           modCount++;
-       } else {
-           Node<E> node = new Node<>(value);
-           node.previous = last;
-           last.next = node;
-           last = node;
-           val++;
-           modCount++;
-       }
+        if (val == 0) {
+            Node<E> node = new Node<>(value);
+            first = node;
+            last = node;
+            val++;
+            modCount++;
+        } else {
+            Node<E> node = new Node<>(value);
+            node.previous = last;
+            last.next = node;
+            last = node;
+            val++;
+            modCount++;
+        }
     }
 
     E get(int index) {
-        if (index == Objects.checkIndex(index, val)) {
-            if (index <= val / 2) {
-                Node<E> result = first;
-                for (int i = 1; i <= index; i++) {
-                    result = result.next;
-                }
-                return result.element;
-            }
-            }
-            Node<E> result = last;
-            for (int i = 0; i < val - index - 1; i++) {
-                result = result.previous;
+        if (index <= val / 2) {
+            Node<E> result = first;
+            for (int i = 1; i <= Objects.checkIndex(index, val); i++) {
+                result = result.next;
             }
             return result.element;
         }
+        Node<E> result = last;
+        for (int i = 0; i < val - index - 1; i++) {
+            result = result.previous;
+        }
+        return result.element;
+    }
 
     @Override
     public Iterator<E> iterator() {

@@ -8,12 +8,12 @@ public class SimpleArray<T> implements Iterable<T> {
     private int pointer = 0;
 
     public T get(int index) {
-         return (T) container[Objects.checkIndex(index, point)];
+        return (T) container[Objects.checkIndex(index, point)];
     }
 
     public void add(T model) {
         if (point >= container.length) {
-           container = Arrays.copyOf(container, container.length * 2);
+            container = Arrays.copyOf(container, container.length * 2);
         }
         container[point++] = model;
         pointer++;

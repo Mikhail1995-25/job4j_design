@@ -1,8 +1,6 @@
 package ru.job4j.collection;
 
-
 import java.util.Iterator;
-
 
 public class SimpleSet<E> implements Iterable<E> {
     private SimpleArray<E> container = new SimpleArray<>();
@@ -12,7 +10,6 @@ public class SimpleSet<E> implements Iterable<E> {
             container.add(value);
         }
     }
-
     public boolean contains(E element) {
         boolean b = false;
         for (E result : container) {
@@ -23,7 +20,6 @@ public class SimpleSet<E> implements Iterable<E> {
         }
         return b;
     }
-
     @Override
     public Iterator<E> iterator() {
         return container.iterator();
