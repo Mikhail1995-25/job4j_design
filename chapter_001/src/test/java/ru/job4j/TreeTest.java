@@ -31,20 +31,20 @@ public class TreeTest {
         Tree<Integer> tree = new Tree<>(1);
         tree.add(1, 2);
         tree.add(1, 3);
-        tree.add(1, 4);
-        tree.add(1, 5);
-        tree.add(1, 6);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        tree.add(6, 7);
         assertThat(tree.isBinary(), is(true));
     }
 
     @Test
     public void whenTestSubsidiaryItemFalse() {
         Tree<Integer> tree = new Tree<>(1);
-        tree.add(6, 1);
-        tree.add(5, 1);
-        tree.add(4, 1);
-        tree.add(3, 1);
-        tree.add(2, 1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(1, 5);
+        tree.add(1, 6);
         assertThat(tree.isBinary(), is(false));
     }
 }
