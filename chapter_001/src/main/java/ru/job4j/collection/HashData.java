@@ -6,14 +6,14 @@ public class HashData<K, V> implements Iterable<V> {
     private Node<K, V>[] hashTable;
     private int size = 0;
     private int modCount;
-    private static final float CONST = 0.75f;
+    private static final float LOAD_FACTOR = 0.75f;
 
     public HashData() {
         hashTable = new Node[16];
     }
 
     public boolean insert(K key, V value) {
-        if (size + 1 >= hashTable.length * CONST) {
+        if (size + 1 >= hashTable.length * LOAD_FACTOR) {
             arrayDoubling();
         }
         Node<K, V> newNode = new Node<>(key, value);
@@ -91,9 +91,7 @@ public class HashData<K, V> implements Iterable<V> {
                     hashTable[index].getNext().remove(newNode);
                     size--;
                     modCount++;
-                    break;
-                } else {
-                    return false;
+                    return true;
                 }
             }
         }
