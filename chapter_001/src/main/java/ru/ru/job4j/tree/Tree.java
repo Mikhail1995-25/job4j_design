@@ -43,6 +43,16 @@ public class Tree<E> implements SimpleTree<E> {
         return rs1;
     }
     public boolean isBinary() {
-        return root.children.size() <= 2;
+        boolean rs1 = false;
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.children.size() <= 2) {
+                rs1 = true;
+                break;
+            }
+        }
+        return rs1;
     }
 }
