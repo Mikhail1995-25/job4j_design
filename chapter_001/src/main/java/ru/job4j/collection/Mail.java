@@ -1,65 +1,32 @@
 package ru.job4j.collection;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class Mail {
 
-    private Set<String> mail;
-
-    public Mail(Set<String> mail) {
-        this.mail = mail;
-    }
-
-    public Set<String> getMail() {
-        return mail;
-    }
-
-    private boolean equalsMail(Set<String> one, Set<String> two) {
-        boolean b = false;
-        for (String set : one) {
-            if (two.contains(set)) {
-                b = true;
-                break;
+    public static Map<String, Set<String>> mails(Map<String, Set<String>> res) {
+        Map<String, Set<String>> user = new TreeMap<>();
+        Map<String, String> result = new TreeMap<>();
+        for (String map : res.keySet()) {
+            String users = null;
+            for (String use : res.get(map)) {
+                users = result.get(use);
+                if (users == null) {
+                    result.put(use, map);
+                } else {
+                    break;
+                }
             }
-        }
-        return b;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Mail mail1 = (Mail) o;
-        return equalsMail(mail, mail1.mail);
-    }
-
-    @Override
-    public int hashCode() {
-        return 42; //Objects.hash(mail);
-    }
-
-    public static Map<String, Mail> users(Map<String, Mail> mail) {
-        Map<Mail, Map.Entry<String, Mail>> map = new HashMap<>();
-        for (Map.Entry<String, Mail> user : mail.entrySet()) {
-            Map.Entry<String, Mail> m = map.get(user.getValue());
-            if (m == null) {
-                map.put(user.getValue(), user);
+            if (users == null) {
+                user.put(map, res.get(map));
             } else {
-                map.remove(user.getValue());
-                m.getValue().getMail().addAll(user.getValue().getMail());
-                map.put(m.getValue(), m);
+                user.get(users).addAll(res.get(map));
+                for (String s : res.get(map)) {
+                    result.put(s, users);
+                }
             }
         }
-        Map<String, Mail> mails = new HashMap<>();
-        for (Map.Entry<String, Mail> v : map.values()) {
-            mails.put(v.getKey(), v.getValue());
-        }
-        return mails;
+        return user;
     }
 }
