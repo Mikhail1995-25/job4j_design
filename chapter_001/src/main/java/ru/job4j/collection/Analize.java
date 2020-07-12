@@ -20,8 +20,8 @@ public class Analize {
                     info.changed++;
                 }
             }
-            info.added = current.size() + info.deleted + previous.size();
         }
+        info.added = current.size() + info.deleted - previous.size();
     return info;
 }
 
@@ -74,6 +74,11 @@ public class Analize {
             this.added = added;
             this.changed = changed;
             this.deleted = deleted;
+        }
+
+        @Override
+        public String toString() {
+            return "Info{" + "added=" + added + ", changed=" + changed + ", deleted=" + deleted + '}';
         }
 
         public int getAdded() {

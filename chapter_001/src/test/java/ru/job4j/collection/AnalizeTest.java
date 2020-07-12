@@ -1,13 +1,9 @@
 package ru.job4j.collection;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.core.Is.is;
 public class AnalizeTest {
     List<Analize.User> prev = new ArrayList<>();
     List<Analize.User> cur = new ArrayList<>();
