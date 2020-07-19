@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import net.sf.saxon.trans.SymbolicName;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -10,6 +11,7 @@ import static org.junit.Assert.assertThat;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class AnalizeTest {
 
@@ -32,10 +34,25 @@ public class AnalizeTest {
 
     @Test
     public void rude() throws IOException {
-        File source = folder.newFile("./src/main/next.txt");
-        File target = folder.newFile("./src/main/unavailable.txt");
-        try (PrintWriter out = new PrintWriter(source)) {
-            out.print("10:57:01 10:59:01");
+        Analizy analizy = new Analizy();
+        File source = folder.newFile("next.txt");
+        File target = folder.newFile("unavailable.txt");
+        try (PrintWriter out = new PrintWriter(new FileWriter(source))) {
+            out.println("200 10:56:01" + System.lineSeparator()
+                        + "200 10:57:01" + System.lineSeparator()
+                        + "400 10:58:01" + System.lineSeparator()
+                        + "200 10:59:01" + System.lineSeparator()
+                        + "500 11:01:02" + System.lineSeparator()
+                        + "200 11:02:02");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
+        StringBuilder string = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new FileReader(target))) {
+            in.lines().forEach(string::append);
+            String result = ("10:58:01 10:59:01" + "11:01:02 11:02:02");
+            assertThat(result, is(string.toString()));
         }
     }
 }
