@@ -53,13 +53,13 @@ public class ChatConsole {
                 String str = in.readLine();
                 write.add(str);
                 reader();
-                if (str.equals(COMMAND_STOP)) {
+                if (COMMAND_STOP.equals(str)) {
                     System.out.println("Чат остановлен!");
                     flag = true;
-                } else if (str.equals(COMMAND_NEXT)) {
+                } else if (COMMAND_NEXT.equals(str)) {
                     System.out.println("Продолжаем:");
                     flag = false;
-                } else if (str.equals(COMMAND_FINISH)) {
+                } else if (COMMAND_FINISH.equals(str)) {
                     System.out.println("Чат завершен!");
                     write();
                     stopFlag = true;
