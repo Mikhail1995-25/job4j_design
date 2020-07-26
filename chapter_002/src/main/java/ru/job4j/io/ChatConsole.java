@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
+
 
 public class ChatConsole {
 
@@ -20,40 +20,65 @@ public class ChatConsole {
     private boolean stopFlag = false;
     private boolean flag = false;
 
-    public void general(File textFirst, File textSecond) {
-        try (PrintWriter in = new PrintWriter(new BufferedOutputStream(new FileOutputStream(textFirst)));
-             BufferedReader out = new BufferedReader(new FileReader(textSecond))) {
-            out.lines().forEach(reader::add);
-            Scanner scanner = new Scanner(System.in);
+    private File textFirst;
+    private File textSecond;
+
+    public ChatConsole(File textFirst, File textSecond) {
+        this.textFirst = textFirst;
+        this.textSecond = textSecond;
+    }
+
+    public void write() {
+        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(textFirst)))) {
+            for (String string : write) {
+                out.println(string + System.lineSeparator());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reader() {
+        try (BufferedReader in = new BufferedReader(new FileReader(textSecond))) {
+            in.lines().forEach(reader::add);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void chatJob() throws IOException {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
             while (!stopFlag) {
-                String str = scanner.nextLine();
+                System.out.println("Введите фразу: ");
+                String str = in.readLine();
                 write.add(str);
+                reader();
                 if (str.equals(COMMAND_STOP)) {
+                    System.out.println("Чат остановлен!");
                     flag = true;
                 } else if (str.equals(COMMAND_NEXT)) {
+                    System.out.println("Продолжаем:");
                     flag = false;
                 } else if (str.equals(COMMAND_FINISH)) {
+                    System.out.println("Чат завершен!");
+                    write();
                     stopFlag = true;
                     flag = true;
                 }
-                for (String string : write) {
-                    in.println(string + System.lineSeparator());
-                }
 
                 if (!flag) {
-                  int i = random.nextInt(reader.size());
-                  write.add(reader.get(i));
-                  System.out.println(reader.get(i));
+                    int i = random.nextInt(reader.size());
+                    write.add(reader.get(i));
+                    System.out.println(reader.get(i));
+                }
             }
-        }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    public static void main(String[] args) {
-        ChatConsole console = new ChatConsole();
-        console.general(new File("dest.txt"), new File("results.txt"));
+    public static void main(String[] args) throws IOException {
+        ChatConsole chatConsole = new ChatConsole(new File("dest.txt"), new File("results.txt"));
+        chatConsole.chatJob();
     }
 }
