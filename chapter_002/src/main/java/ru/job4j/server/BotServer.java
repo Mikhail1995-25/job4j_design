@@ -1,5 +1,8 @@
 package ru.job4j.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,11 +11,16 @@ import java.util.List;
 import java.util.Random;
 
 public class BotServer {
-    public static void main(String[] args) throws IOException {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BotServer.class.getName());
+
+    public static void main(String[] args) {
         Random random = new Random();
         List<String> list = new ArrayList<>();
         try (BufferedReader out = new BufferedReader(new FileReader("chat.txt"))) {
             out.lines().forEach(list::add);
+        } catch (Exception e) {
+            LOG.error("Exception in log", e);
         }
         boolean job = true;
         try (ServerSocket serverSocket = new ServerSocket(9000)) {
@@ -39,6 +47,8 @@ public class BotServer {
                     }
                 }
             }
+        } catch (Exception e) {
+            LOG.error("Socket not found", e);
         }
     }
     }
