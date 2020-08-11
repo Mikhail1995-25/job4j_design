@@ -9,14 +9,15 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class Searchs extends SimpleFileVisitor<Path> {
     private List<File> files = new ArrayList<>();
-    private Predicate<Path> predicate;
+    private Pattern predicate;
 
-    public Searchs(Predicate<Path> predicate) {
+    public Searchs(Pattern predicate) {
         this.predicate = predicate;
     }
 
@@ -26,7 +27,7 @@ public class Searchs extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        boolean job = predicate.test(file);
+        boolean job = true;
         if (job) {
             files.add(file.toFile());
         }

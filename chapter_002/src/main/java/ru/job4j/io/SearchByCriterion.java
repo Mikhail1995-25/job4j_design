@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class SearchByCriterion {
     public static void main(String[] args) throws IOException {
@@ -16,17 +17,17 @@ public class SearchByCriterion {
         searchByCriterion.write(file, args1);
     }
 
-    public Predicate<Path> attributeLookUp(Args args) {
-        Predicate<Path> predicate = null;
+    public Pattern attributeLookUp(Args args) {
+        Pattern pattern =  null;
         if (args.getValues().containsKey(args.full())) {
-            predicate = path -> path.toFile().getName().equals(args.name());
+            pattern = Pattern.compile(args.name());
         } else if (args.getValues().containsKey(args.mask())) {
             String line = pattern(args.name());
-            predicate = path -> path.toFile().getName().matches(line);
+            pattern = Pattern.compile(line);
         } else if (args.getValues().containsKey(args.regex())) {
-            predicate = path -> path.toFile().getName().matches(args.name());
+            pattern = Pattern.compile(args.name());
         }
-        return predicate;
+        return pattern;
     }
 
     public List<File> expected(Args args) throws IOException {
