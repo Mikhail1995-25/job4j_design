@@ -17,17 +17,16 @@ public class SearchByCriterion {
         searchByCriterion.write(file, args1);
     }
 
-    public Pattern attributeLookUp(Args args) {
-        Pattern pattern =  null;
-        if (args.getValues().containsKey(args.full())) {
-            pattern = Pattern.compile(args.name());
-        } else if (args.getValues().containsKey(args.mask())) {
-            String line = pattern(args.name());
-            pattern = Pattern.compile(line);
-        } else if (args.getValues().containsKey(args.regex())) {
-            pattern = Pattern.compile(args.name());
-        }
-        return pattern;
+    public Predicate<Path> attributeLookUp(Args args) {
+       Predicate<Path> predicate = null;
+       if (args.getValues().containsKey(args.full())) {
+           predicate = new RegexSearch(args.name());
+       } else if (args.getValues().containsKey(args.mask())) {
+           predicate = new RegexSearch(pattern(args.name()));
+       } else if (args.getValues().containsKey(args.name())) {
+           predicate = new RegexSearch(args.name());
+       }
+       return predicate;
     }
 
     public List<File> expected(Args args) throws IOException {
@@ -60,5 +59,18 @@ public class SearchByCriterion {
             }
         }
         return str.toString();
+    }
+
+    private static class RegexSearch implements Predicate<Path> {
+        private Pattern pattern;
+
+        public RegexSearch(String name) {
+            this.pattern = Pattern.compile(name);
+        }
+
+        @Override
+        public boolean test(Path path) {
+            return pattern.matcher(path.toFile().getName()).matches();
+        }
     }
 }
